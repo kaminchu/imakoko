@@ -5,4 +5,18 @@ body {
 
 a {
   color: #00B7FF;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+ul {
+  list-style:none;
+}
+
+.u-flex {
+  display: flex;
+}
+
+.u-pa4 {
+  padding: 4px;
 }

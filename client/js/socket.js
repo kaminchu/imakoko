@@ -1,5 +1,6 @@
 import io from "socket.io-client";
+import baseUrl from "./baseUrl";
 
-let socket = io.connect("http://localhost:3001");
+let socket = io.connect(baseUrl);
 
 export default socket;

@@ -27,7 +27,7 @@ export default class Map extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      position: { lat: 35.681167, lng: 139.767052 },
+      position: null,
     }
   }
 
@@ -39,10 +39,8 @@ export default class Map extends React.PureComponent {
 
 
   render() {
-    return (
-      <MapComponent
-        position={this.state.position}
-      />
-    )
+    const map = () => <MapComponent position={this.state.position}/>;
+    const none = () => <div>地図が公開されていません</div>;
+    return this.state.position ? map() : none();
   }
 }
