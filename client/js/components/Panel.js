@@ -1,14 +1,23 @@
 import React from "react";
 import { Toggle, LinearProgress } from "material-ui";
 import socket from "../socket";
+import { Link } from "react-router-dom";
+import Map from "./Map";
 
 export default class Application extends React.Component {
   constructor(){
     super();
     this.state = {
       sendingPosition: false,
-      watchId: null
+      watchId: null,
+      mapId: null
     };
+  }
+  componentDidMount() {
+    socket.emit("id?");
+    socket.on("getId", id => {
+      this.setState({mapId: id});
+    });
   }
 
   render(){
@@ -20,6 +29,8 @@ export default class Application extends React.Component {
           label: "現在地を送信する"
         }}/>
         {this.state.sendingPosition ? <Sending/> : <NoSending/>}
+        <Link to={`map/${this.state.mapId}`}>地図</Link>
+        {this.state.mapId !== null && <Map match={{params:{id: this.state.mapId}}}/>}
       </div>
     );
   }
@@ -28,7 +39,8 @@ export default class Application extends React.Component {
     if(isChecked){
       const watchId = navigator.geolocation.watchPosition(position => {
         const {latitude, longitude} = position.coords;
-        socket.emit("sendMessage", `latitude: ${latitude}, longitude:${longitude}`);
+        const pos = JSON.stringify({lat: latitude, lng: longitude});
+        socket.emit(this.state.mapId, pos);
       }) ;
       this.setState({watchId, sendingPosition: isChecked});
     } else {
