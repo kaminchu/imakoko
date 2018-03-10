@@ -2,7 +2,7 @@ import "react-hot-loader/patch";
 import React from "react";
 import ReactDOM from "react-dom";
 import { AppContainer } from "react-hot-loader";
-import Application from "./components/Application";
+import Router from "./router";
 import { MuiThemeProvider } from "material-ui/styles";
 
 //
@@ -19,7 +19,7 @@ if ('serviceWorker' in navigator) {
 ReactDOM.render(
   <AppContainer>
     <MuiThemeProvider>
-      <Application />
+      <Router />
     </MuiThemeProvider>
   </AppContainer>
   , document.getElementById("app"));

@@ -3,8 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "prestart": "npm run build",
     "start": "node ./bin/www",
-    "build": "parcel build ./client/index.html -d public --public-url ./"
+    "parcel": "parcel ./client/index.html",
+    "build": "parcel build ./client/index.html -d public --public-url ./ && cp -rf ./client/img ./public/"
   },
   "dependencies": {
     "body-parser": "~1.17.1",
@@ -15,7 +17,12 @@
     "material-ui": "^0.20.0",
     "morgan": "~1.8.1",
     "react": "^16.2.0",
+    "react-clipboard.js": "^1.1.3",
     "react-dom": "^16.2.0",
+    "react-google-maps": "^9.4.5",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
+    "recompose": "^0.26.0",
     "serve-favicon": "~2.4.2",
     "socket.io": "^2.0.4",
     "socket.io-client": "^2.0.4"
