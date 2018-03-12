@@ -4,6 +4,8 @@ import socket from "../socket";
 import baseUrl from "../baseUrl";
 import Map from "./Map";
 import Clipboard from "react-clipboard.js";
+import QRCode from "qrcode.react";
+import {Dialog, FlatButton, RaisedButton} from "material-ui";
 
 export default class Application extends React.Component {
   constructor(){
@@ -54,22 +56,72 @@ export default class Application extends React.Component {
 const Sending = () => <LinearProgress mode="indeterminate" />;
 const NoSending = () => <LinearProgress mode="determinate" />;
 
-const Share = (props) => {
-  const link = `${baseUrl}/#/map/${props.id}`;
-  const encodeLink = encodeURIComponent(link);
+class Share extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      openDialog: false
+    };
+  }
+
+  render() {
+    const link = `${baseUrl}/#/map/${this.props.id}`;
+    const encodeLink = encodeURIComponent(link);
+    return (
+      <ul className="u-flex">
+        <li className="u-pa4">
+          <a href={`http://line.me/R/msg/text/?${link}`}>LINE</a>
+        </li>
+        <li className="u-pa4">
+          <a href={`http://twitter.com/share?url=${encodeLink}`}>Twitter</a>
+        </li>
+        <li className="u-pa4">
+          <Clipboard component="a" data-clipboard-text={link} onSuccess={() => alert("コピーしました")}>
+            リンクをコピーする
+          </Clipboard>
+        </li>
+        <li className="u-pa4">
+          <QRDialog {...{
+            open: this.state.openDialog,
+            handleOpen: this.handleDialogOpen.bind(this),
+            handleClose: this.handleDialogClose.bind(this),
+            link: link
+          }}/>
+        </li>
+      </ul>
+    );
+  }
+  handleDialogOpen(){
+    this.setState({openDialog: true});
+  }
+  handleDialogClose() {
+    this.setState({openDialog: false});
+  }
+}
+
+const QRDialog = (props) => {
+  const actions = [
+    <FlatButton
+      label="OK"
+      primary={true}
+      keyboardFocused={false}
+      onClick={props.handleClose}
+    />,
+  ];
+
   return (
-    <ul className="u-flex">
-      <li className="u-pa4">
-        <a href={`http://line.me/R/msg/text/?${link}`}>LINE</a>
-      </li>
-      <li className="u-pa4">
-        <a href={`http://twitter.com/share?url=${encodeLink}`}>Twitter</a>
-      </li>
-      <li className="u-pa4">
-        <Clipboard component="a" data-clipboard-text={link} onSuccess={() => alert("コピーしました")}>
-          リンクをコピーする
-        </Clipboard>
-      </li>
-    </ul>
+    <div>
+      <a href="#" onClick={props.handleOpen}>QRコードを表示する</a>
+      <Dialog
+        title="QRコード"
+        actions={actions}
+        modal={false}
+        open={props.open}
+        contentStyle={{width: "176px"}}
+        onRequestClose={props.handleClose}
+      >
+        <QRCode value={props.link}/>
+      </Dialog>
+    </div>
   );
 };
