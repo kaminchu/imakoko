@@ -9,12 +9,12 @@ cache:
   paths:
   - node_modules/
 
-#test:
-#  stage: test
-#  script:
-#    - npm install
-#    - npm test
-#
+test:
+  stage: test
+  script:
+    - npm install
+    - npm test
+
 #pack:
 #  stage: deploy
 #  script:
