@@ -3,14 +3,15 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "prestart": "npm run build",
-    "start": "nodemon src/server/app.js --exec babel-node",
+    "start": "babel-node src/server/app.js",
+    "start:server": "node dist/app.js",
     "build:server": "babel src/server -d dist",
-    "serve": "node dist/app.js",
-    "parcel": "parcel ./client/index.html",
-    "build": "parcel build ./src/client/index.html -d public --public-url ./ && cp -rf ./src/client/img ./public/"
+    "build:client": "parcel build ./src/client/index.html -d public --public-url ./ && cp -rf ./src/client/img ./public/"
   },
   "dependencies": {
+    "@types/googlemaps": "^3.30.7",
+    "@types/markerclustererplus": "^2.1.33",
+    "@types/react": "^16.0.40",
     "express": "^4.16.3",
     "material-ui": "^0.20.0",
     "qrcode.react": "^0.8.0",
@@ -28,7 +29,6 @@
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
-    "nodemon": "^1.17.2",
     "parcel-bundler": "^1.6.2",
     "react-hot-loader": "^4.0.0"
   }

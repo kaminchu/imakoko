@@ -1,6 +1,7 @@
 import express from "express";
 import http from "http";
 import path from "path";
+import Bundler from "parcel-bundler";
 import socketio from "socket.io";
 import sockets from "./socket";
 
@@ -9,7 +10,13 @@ const app = express();
 const server = http.Server(app);
 
 // 静的ファイル
-app.use(express.static(path.join(process.cwd(), "public")));
+if(process.env.NODE_ENV === "production") {
+    app.use(express.static(path.join(process.cwd(), "public")));
+} else {
+    const bundler = new Bundler(path.join(process.cwd(), "src/client/index.html"));
+    app.use(bundler.middleware());
+}
+
 
 
 // socketioまわり
