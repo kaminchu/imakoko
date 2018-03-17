@@ -2,15 +2,12 @@ image: node:9.8.0
 
 stages:
   - test
-  - deploy
-
-
 
 cache:
   paths:
   - node_modules/
 
-// test
+# test
 test:
   stage: test
   script:
@@ -22,7 +19,7 @@ lint:
     - npm install
     - npm run lint
 flow:
-  stage: flow
+  stage: test
   script:
     - npm install
     - npm run flow
