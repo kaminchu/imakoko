@@ -1,3 +1,4 @@
+// @flow
 import React from "react";
 import { Toggle, LinearProgress } from "material-ui";
 import socket from "../socket";
@@ -7,7 +8,12 @@ import Clipboard from "react-clipboard.js";
 import QRCode from "qrcode.react";
 import {Dialog, FlatButton, RaisedButton} from "material-ui";
 
-export default class Application extends React.Component {
+type PanelState = {
+  sendingPosition: null | boolean,
+  watchId: null | number,
+  mapId: null | string
+};
+export default class Panel extends React.Component<{}, PanelState> {
   constructor(){
     super();
     this.state = {
@@ -38,7 +44,7 @@ export default class Application extends React.Component {
     );
   }
 
-  handleToggle(e, isChecked) {
+  handleToggle(e: any, isChecked: boolean): void {
     if(isChecked){
       const watchId = navigator.geolocation.watchPosition(position => {
         const {latitude, longitude} = position.coords;
@@ -47,8 +53,8 @@ export default class Application extends React.Component {
       }) ;
       this.setState({watchId, sendingPosition: isChecked});
     } else {
-      this.state.watchId !== null || navigator.geolocation.clearWatch(this.state.watchId);
-      this.setState({watchId: "", sendingPosition: isChecked});
+      typeof this.state.watchId === "number" && navigator.geolocation.clearWatch(this.state.watchId);
+      this.setState({watchId: null, sendingPosition: isChecked});
     }
   }
 }
@@ -56,8 +62,14 @@ export default class Application extends React.Component {
 const Sending = () => <LinearProgress mode="indeterminate" />;
 const NoSending = () => <LinearProgress mode="determinate" />;
 
-class Share extends React.Component {
-  constructor(props){
+type ShareProps = {
+  id: null | string
+};
+type ShareState = {
+  openDialog: boolean
+};
+class Share extends React.Component<ShareProps, ShareState> {
+  constructor(props: ShareProps){
     super(props);
     this.state = {
       openDialog: false
@@ -65,7 +77,7 @@ class Share extends React.Component {
   }
 
   render() {
-    const link = `${baseUrl}/#/map/${this.props.id}`;
+    const link = `${baseUrl}/#/map/${this.props.id ? this.props.id : ""}`;
     const encodeLink = encodeURIComponent(link);
     return (
       <ul className="u-flex">
