@@ -9,7 +9,7 @@
     "build:client": "parcel build ./src/client/index.html -d public --public-url ./ && cp -rf ./src/client/img ./public/",
     "flow": "flow",
     "flow-typed": "flow-typed",
-    "flow-typed:install": "flow-typed install --skip"
+    "lint": "eslint src"
   },
   "dependencies": {
     "@types/googlemaps": "^3.30.7",
@@ -30,9 +30,18 @@
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
+    "babel-eslint": "^8.2.2",
     "babel-plugin-transform-flow-strip-types": "^6.22.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
+    "eslint": "^4.19.0",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-flowtype": "^2.46.1",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.7.0",
+    "eslint-plugin-react": "^7.7.0",
+    "eslint-plugin-standard": "^3.0.1",
     "flow-bin": "^0.68.0",
     "flow-typed": "^2.4.0",
     "parcel-bundler": "^1.6.2",

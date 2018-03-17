@@ -6,7 +6,7 @@ import baseUrl from "../baseUrl";
 import Map from "./Map";
 import Clipboard from "react-clipboard.js";
 import QRCode from "qrcode.react";
-import {Dialog, FlatButton, RaisedButton} from "material-ui";
+import { Dialog, FlatButton } from "material-ui";
 
 type PanelState = {
   sendingPosition: null | boolean,

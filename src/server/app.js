@@ -1,3 +1,5 @@
+/* global process:false */
+/* eslint no-console: 0 */
 import express from "express";
 import http from "http";
 import path from "path";
