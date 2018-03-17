@@ -6,7 +6,10 @@
     "start": "babel-node src/server/app.js",
     "start:server": "node dist/app.js",
     "build:server": "babel src/server -d dist",
-    "build:client": "parcel build ./src/client/index.html -d public --public-url ./ && cp -rf ./src/client/img ./public/"
+    "build:client": "parcel build ./src/client/index.html -d public --public-url ./ && cp -rf ./src/client/img ./public/",
+    "flow": "flow",
+    "flow-typed": "flow-typed",
+    "flow-typed:install": "flow-typed install --skip"
   },
   "dependencies": {
     "@types/googlemaps": "^3.30.7",
@@ -27,8 +30,11 @@
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
+    "flow-bin": "^0.68.0",
+    "flow-typed": "^2.4.0",
     "parcel-bundler": "^1.6.2",
     "react-hot-loader": "^4.0.0"
   }
